@@ -4,17 +4,18 @@ authors = ["Wanda0929 <hwang924@connect.hkust-gz.edu.cn>"]
 version = "0.1.0"
 
 [deps]
-LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-Yao = "5872b779-8223-5990-8dd0-5abbb0748c8c"
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Symbolics = "0c5d862f-8b57-4792-8d23-62f2024744c7"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+Yao = "5872b779-8223-5990-8dd0-5abbb0748c8c"
 
 [compat]
-julia = "1.11"
+Documenter = "1.4.0"
+Symbolics = "5.28.0"
 Test = "1.11.0"
 Yao = "0.9.1"
-Documenter = "1.4.0"
+julia = "1.11"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

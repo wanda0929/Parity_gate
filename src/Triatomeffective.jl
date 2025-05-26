@@ -1,12 +1,12 @@
 using Yao, Yao.EasyBuild
 using LinearAlgebra
 
-function Rabi_frequency(Ω_f::Float64, τ::Float64, α::Float64)
+function rabi_frequency(Ω_f::Float64, τ::Float64, α::Float64)
     T = τ/8
     a = exp(-(2*T)^2/(2*(α*T)^2))
     b = exp(-(τ/2-6*T)^2/(2*(α*T)^2))
     function O(t::Float64)
-        if -8 < t <= 4*T
+        if 0 < t <= 4*T
             return Ω_f * (exp(-(t-2*T)^2/(2*(α*T)^2))-a)/(1-a)
             #return real(Ω * (exp(-(t+5)^2/(2*τ^2)-im * α * (t+5)^2/2)))
         elseif 4*T < t <= τ
@@ -16,6 +16,23 @@ function Rabi_frequency(Ω_f::Float64, τ::Float64, α::Float64)
         end
     end
     return O
+end
+
+function calculate_pulse_area(Ω_f::Float64, τ::Float64, α::Float64)
+    # 创建Rabi频率函数
+    Ω(t) = Rabi_frequency(Ω_f, τ, α)(t)
+    
+    # 使用数值积分计算脉冲面积
+    # 积分区间从 -8 到 τ
+    dt = 0.001  # 积分步长
+    t_range = 0:dt:τ
+    area = 0.0
+    
+    for t in t_range
+        area += abs(Ω(t)) * dt
+    end
+    
+    return area
 end
 
 function effectiveHamiltonian1(Ω_0::Float64, Ω_1::Float64)
@@ -66,8 +83,10 @@ function initialize_superposition_state1()
 end
 
 function evolve_eff1(reg, Ω_f::Float64, τ::Float64, α::Float64, Nt = 10000)
-    Ω_0(t) = Rabi_frequency(Ω_f, τ, α)(t)/sqrt(2)
-    Ω_1(t) = -1 * Rabi_frequency(Ω_f, τ, α)(t)/sqrt(2)
+    Ω_0(t) = rabi_frequency(Ω_f, τ, α)(t)
+    #/sqrt(2)
+    Ω_1(t) = -1 * rabi_frequency(Ω_f, τ, α)(t)
+    #/sqrt(2)
     state0 = Float64[]
     state1 = Float64[]
     stated = Float64[]

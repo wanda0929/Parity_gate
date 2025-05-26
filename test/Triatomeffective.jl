@@ -8,7 +8,7 @@ import Yao: expect
 @testset "ARP_pulse" begin
     Ω_f = 0.5069 * 2π
     Ω_c = 3.533 * 2π
-    α = 0.529
+    α = 0.5253
     τ = 3.0
     
     t_total = τ
@@ -65,9 +65,9 @@ end
 end
 
 @testset "paritygate" begin
-    Ω_f = 0.5069 * 2π
+    Ω_f = 0.5069 * 2π/2
     Ω_c = 3.533 * 2π
-    α = 0.529
+    α = 0.5253
     τ = 3.0
     Δ = 20 * Ω_c
     J_dd = Δ
